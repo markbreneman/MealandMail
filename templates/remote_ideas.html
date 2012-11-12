@@ -2,14 +2,25 @@
 
 {% block body %}
 
-<h3>Ideas pulled from <a target="_blank" href="http://itp-ideas-dwd.herokuapp.com/data/ideas">http://itp-ideas-dwd.herokuapp.com/data/ideas</a>.</h3>
+<h3>These people have mail and also need a meal.</h3>
 
 <hr>
 
 <div class="row">
 
 	<div class="span8">
-	
+
+
+	{% for m in meal %}
+		<!-- {% for n in mail.ideas %} -->
+		<!-- {% if m.to == n.creator%} -->
+		<h3>{{m.to}}</h3>
+		<hr>
+		<!-- {% endif %} -->
+		{% endfor %}
+	<!-- {% endfor %}	 -->
+
+
 	{% for i in ideas %}
 		<h3>{{ i.title }}</h3>
 		<p>by {{ i.creator }}</p>

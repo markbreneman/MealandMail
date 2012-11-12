@@ -23,8 +23,8 @@ app.config['CSRF_ENABLED'] = False
 
 # --------- Database Connection ---------
 # MongoDB connection to MongoLab's database
-connect('mydata', host=os.environ.get('MONGOLAB_URI'))
-app.logger.debug("Connecting to MongoLabs")
+# connect('mydata', host=os.environ.get('MONGOLAB_URI'))
+# app.logger.debug("Connecting to MongoLabs")
 
 # hardcoded categories for the checkboxes on the form
 categories = ['web','physical computing','software','video','music','installation','assistive technology','developing nations','business','social networks']
@@ -260,8 +260,8 @@ def get_remote_ideas():
 	meal_request = requests.get(meal_url)
 
 	# log out what we got
-	app.logger.info(mail_request.json)
-	app.logger.info(meal_request.json)
+	# app.logger.info(mail_request.json)
+	# app.logger.info(meal_request.json)
 
 	# requests will automatically convert json for us.
 	# .json will convert incoming json to Python dictionary for us
@@ -286,10 +286,14 @@ def get_remote_ideas():
 	# 	]
 	# }
 
-	if mail_data.get('status') == "OK" && meal_data.get('status') == "OK" :
+	# app.logger.info(mail_data['ideas'])
+	app.logger.info(mail_data.get('ideas'))
+	
+
+	if mail_data.get('status') == "OK" and meal_data.get('status') == "OK" :
 		templateData = {
-			'mail' : mail_data.get('to') # get the ideas from the returned json
-			'meal' : meal_data.get('creator') # get the ideas from the returned json
+			'mail' : mail_data.get('ideas'), # get the ideas from the returned json
+			# 'meal' : meal_data.get('ideas') # get the ideas from the returned json
 		}
 
 		return render_template('remote_ideas.html', **templateData)
@@ -320,8 +324,8 @@ def slugify(text, delim=u'-'):
 if __name__ == "__main__":
 	app.debug = True
 	
-	port = int(os.environ.get('PORT', 5000)) # locally PORT 5000, Heroku will assign its own port
-	app.run(host='0.0.0.0', port=port)
+	port = int(os.environ.get('PORT', 5002)) # locally PORT 5000, Heroku will assign its own port
+	app.run(host='127.0.0.1', port=port)
 
 
 
