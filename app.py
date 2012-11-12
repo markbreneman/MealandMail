@@ -287,8 +287,10 @@ def get_remote_ideas():
 	# }
 
 	# app.logger.info(mail_data['ideas'])
-	app.logger.info(mail_data.get('ideas').to)
-	
+	# app.logger.info(mail_data.get('ideas').to)
+	for i in mail_data['ideas']:
+		app.logger.info(i['to'])
+
 
 	if mail_data.get('status') == "OK" and meal_data.get('status') == "OK" :
 		templateData = {
