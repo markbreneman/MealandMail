@@ -16,6 +16,9 @@ import models
 import json
 from flask import jsonify
 
+
+from collections import Counter
+
 import requests
 
 app = Flask(__name__)   # create our flask app
@@ -27,7 +30,6 @@ app.config['CSRF_ENABLED'] = False
 # app.logger.debug("Connecting to MongoLabs")
 
 # hardcoded categories for the checkboxes on the form
-categories = ['web','physical computing','software','video','music','installation','assistive technology','developing nations','business','social networks']
 
 # --------- Routes ----------
 
@@ -286,15 +288,48 @@ def get_remote_ideas():
 	# 	]
 	# }
 
-	# app.logger.info(mail_data['ideas'])
+	# app.logger.info(mail_data.get('ideas'))
 	# app.logger.info(mail_data.get('ideas').to)
+	
+	# for i in mail_data['ideas']:
+	# 	app.logger.info(i['to'])
+
+	mailnames=[]
+	mealnames=[]
+	matches=[]
+	vendors=[]
+	
+
 	for i in mail_data['ideas']:
-		app.logger.info(i['to'])
+		mailnames.append(i['to']);		
+	
+	for j in meal_data['ideas']:
+		mealnames.append(j['creator']);		
+
+
+	for m in mealnames:
+		for n in mailnames:
+			if m == n:
+				matches.append(m);
+
+
+	for i in mail_data['ideas']:
+		vendors.append(i['from']);		
+
+	cnt = Counter()
+	for word in vendors:
+		cnt[word] += 1
+
+	# app.logger.info(cnt.values())
+	maxvendor=max(cnt, key=cnt.get)
+
 
 
 	if mail_data.get('status') == "OK" and meal_data.get('status') == "OK" :
 		templateData = {
-			'mail' : mail_data.get('ideas'), # get the ideas from the returned json
+			'matches' : matches,
+			'maxvendor' : maxvendor
+			# 'mail' : mail_data.get('ideas'), # get the ideas from the returned json
 			# 'meal' : meal_data.get('ideas') # get the ideas from the returned json
 		}
 

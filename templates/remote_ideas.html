@@ -7,22 +7,19 @@
 <hr>
 
 <div class="row">
-
 	<div class="span8">
 
 
-	{% for m in meal %}
-		<!-- {% for n in mail.ideas %} -->
-		<!-- {% if m.to == n.creator%} -->
-		<h3>{{ m.to }}</h3>
+	{% for m in matches %}
+		
+		
+		<h3>{{m}}</h3>
 		<hr>
-		<!-- {% endif %} -->
-		{% endfor %}
-	<!-- {% endfor %}	 -->
-
+		
+	{% endfor %}	
 	
 	</div>
-
+	<h1> Oh Also... ITP's favorite vendor is  {{maxvendor}}</h1>
 </div>
 
 {% endblock %}
